@@ -63,6 +63,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi import Request
+
+@app.middleware("http")
+async def rewrite_api_path(request: Request, call_next):
+    if request.scope.get("path", "").startswith("/api"):
+        request.scope["path"] = request.scope["path"][4:] or "/"
+    return await call_next(request)
+
+
 
 # ──────────────────────────────────────────────
 # In-Memory Session Storage
