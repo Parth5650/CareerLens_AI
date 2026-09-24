@@ -53,7 +53,14 @@ app = FastAPI(
 )
 
 frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
-origins = [frontend_url] if frontend_url else ["http://localhost:5173"]
+origins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:5174",
+    frontend_url
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -86,7 +93,12 @@ TEMP_DIR.mkdir(exist_ok=True)
 # Connect to MongoDB
 try:
     mongo_uri = os.getenv("MONGODB_URI", "mongodb://localhost:27017/")
-    mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
+    if "cluster0.mongodb.net" in mongo_uri and "your_username" in mongo_uri:
+        import mongomock
+        mongo_client = mongomock.MongoClient()
+        logger.info("Using MONGOMOCK (In-Memory Database) because MONGODB_URI is not set!")
+    else:
+        mongo_client = MongoClient(mongo_uri, serverSelectionTimeoutMS=5000)
     db = mongo_client["careerlens_ai"]
 except Exception as e:
     logger.error(f"MongoDB connection failed: {e}")

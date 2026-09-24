@@ -12,10 +12,20 @@ def generate_text(prompt: str) -> str:
 
     # 1. Get API token
     api_token = os.environ.get("HUGGINGFACEHUB_API_TOKEN")
-    if not api_token:
-        raise ValueError(
-            "Error: HUGGINGFACEHUB_API_TOKEN environment variable is not set in .env or system."
-        )
+    if not api_token or api_token == "your_huggingface_token_here":
+        print("[WARNING] Using MOCK LLM response because no valid API token was provided.")
+        # Return a mock JSON response for resume analysis so the app doesn't crash
+        return """{
+          "name": "Mock Candidate",
+          "email": "mock@example.com",
+          "skills": ["Python", "FastAPI", "React", "AI"],
+          "education": ["B.S. Computer Science"],
+          "experience": ["Software Engineer at Tech Corp"],
+          "projects": ["CareerLens AI Clone"],
+          "strengths": ["Fast learner", "Problem solver"],
+          "weaknesses": ["Needs to configure API keys"],
+          "suggestions": ["Add a real HUGGINGFACEHUB_API_TOKEN to the backend .env file!"]
+        }"""
 
     # 2. Define API URL (OpenAI-compatible endpoint on HuggingFace)
     # model = "meta-llama/Llama-3.1-8B-Instruct"
