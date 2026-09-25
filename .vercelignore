@@ -1,0 +1,8 @@
+# Ignore files/dirs not needed for the Vercel deployment
+server/
+backend/venv/
+backend/.env
+backend/resume.pdf
+*.pyc
+__pycache__/
+.git/
