@@ -27,8 +27,6 @@ cryptography==46.0.3
 cytoolz==1.1.0
 dataclasses-json==0.6.7
 distro==1.9.0
-Django==5.1.6
-django-widget-tweaks==1.5.0
 dnspython==2.8.0
 durationpy==0.10
 eth-account==0.8.0
@@ -43,7 +41,6 @@ faiss-cpu==1.13.2
 fastapi==0.115.12
 filelock==3.20.3
 firebase_admin==7.1.0
-Flask==3.1.1
 flatbuffers==25.12.19
 frozenlist==1.8.0
 fsspec==2026.1.0
